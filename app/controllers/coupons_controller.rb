@@ -18,12 +18,15 @@ class CouponsController < ApplicationController
   #   redirect_to coupon
   # end
   
-  def create
-    @coupon = Coupon.new
-    @coupon.store = params[:store]
-    @coupon.coupon_code = params[:coupon_code]
-    @coupon.save
+
+  def create #save new record when clicked submit on "new"
+    @coupon = Coupon.create(allowed_params)
     redirect_to coupon_path(@coupon)
-  end
+end
+
+  private
+    def allowed_params
+       params.require(:coupon).permit(:coupon_code, :store)
+    end
 
 end
